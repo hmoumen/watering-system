@@ -23,36 +23,35 @@ class gtc:
 
 		def __init__(self, gpio):
 			self.gpio = gpio
-			print('Initialisation du relais GPIO : {}'.format(self.gpio))
+			print('\t*Init : relais GPIO : {}'.format(self.gpio))
 			GPIO.setup(self.gpio, GPIO.OUT)
-			self.on()
-			time.sleep(0.5)
-			self.off()
-			time.sleep(0.5)
 			self.type = "relay"
 
 		def on(self):
 			GPIO.output(self.gpio, GPIO.HIGH)
-		
+
 		def off(self):
 			GPIO.output(self.gpio, GPIO.LOW)
-		
+
 		def status(self):
 			return GPIO.input(self.gpio)
+
+		def test(self):
+			self.on()
+			time.sleep(0.5)
+			self.off()
+			time.sleep(0.5)
 
 	class ultrasonic:
 
 		def __init__(self, gpio_trigger, gpio_echo):
 			self.gpio_trigger = gpio_trigger
 			self.gpio_echo = gpio_echo
-			print('Initialisation du capteur ultrason GPIO : ')
-			print('\t Trigger GPIO \t: {}'.format(self.gpio_trigger))
-			print('\t Echo GPIO \t: {}'.format(self.gpio_echo))
+			print('\t*Init : capteur ultrason GPIO : ')
+			print('\t\t **Trigger GPIO \t: {}'.format(self.gpio_trigger))
+			print('\t\t **Echo GPIO \t: {}'.format(self.gpio_echo))
 			GPIO.setup(self.gpio_trigger,GPIO.OUT)
 			GPIO.setup(self.gpio_echo,GPIO.IN)
-			depth_per = 100 - ((self.average_depth() / 150) * 100)
-			print("Reservoir rempli à {} %".format(int(depth_per)))
-			time.sleep(0.5)
 
 		def instant_depth(self):
 			GPIO.output(self.gpio_trigger, GPIO.LOW)
@@ -113,8 +112,7 @@ class gtc:
 	class rain:
 		def __init__(self, gpio):
 			self.gpio = gpio
-			print('Initialisation du capteur de pluie/arrosage GPIO : {}'.format(self.gpio))
-			time.sleep(0.5)
+			print('\t*Init : capteur de pluie/arrosage GPIO : {}'.format(self.gpio))
 			GPIO.setup(self.gpio, GPIO.IN)
 		
 		def status(self):
